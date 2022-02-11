@@ -4,4 +4,3 @@ autogen*
 *.pb.go
 gen_to.go
 ./model/*
-go.sum
