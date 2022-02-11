@@ -1,0 +1,7 @@
+.idea
+autogen*
+*_t.go
+*.pb.go
+gen_to.go
+./model/*
+go.sum

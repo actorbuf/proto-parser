@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "./;proto";
+
+
+enum ErrCode {
+    Nil = 0; // 无错误
+}
+
+// @desc: 封号类型
+enum BannedType {
+    BannedTypeNil   = 0; // 无限制
+    FuncDisabling   = 1; // 功能限制
+    ShortTermBanned = 2; // 短期封禁
+    ForeverBanned   = 3; // 永久封禁
+}
+
+// @desc: 封号原因
+enum BannedReason {
+    BannedReasonNil      =   0;
+    FreqOperate          =   1; //操作频繁， 对其他⽤⼾构成骚扰
+    FreqRegister         =   2; //批量或者使⽤⾮法软件注册
+    EnvAnomaly           =   3; // 环境异常，影响账号安全
+    AccountDanger        =   4; // 账号有被盗⽤的⻛险，为了保护隐私和财产安全，系统冻结账号
+    RestrictAddFriend    = 101; // 限制加好友
+    RestrictFriendMoment = 102; // 限制朋友圈
+    RestrictWeworkFriend = 103; // 限制与企业微信联系⼈相关
+    RestrictGroupAndPull = 104; // 限制加群、拉⼈、被拉群
+}
+
+// @desc: 封号记录
+message ModelBannedLog {
+    int64        id               =  1; // 日志id
+    string       robot_wx_id      =  2; // 机器人ID
+    int64        created_at       =  3; // 创建时间
+    int64        updated_at       =  4; // 更新时间
+    int64        recovered_at     =  5; // 恢复时间
+    string       recorder         =  6; // 记录者
+    string       recover_recorder =  7; // 恢复记录⼈
+    BannedType   type             = 10; // 类型
+    BannedReason reason           = 11; // 原因
+}
+
+// @desc: 操作⽇志
+message ModelOperLog {
+    message A {}
+    message B {}
+    int64  id         = 1; // 日志ID
+    int64  created_at = 2; // 操作时间
+    string operator   = 3; // 操作⼈
+    string op_field   = 4; // 变更字段
+    string op_before  = 5; // 变更前
+    string op_after   = 6; // 变更后
+    A      a          = 7;
+    B      b          = 8;
+}
+
+// @task: true
+// @gen_to: ./crm_task.go
+service CrmTask {
+    // @desc: {minute} {hour} {day-of-month} {month} {day-of-week}
+    //  执行规则
+    // @t: 5 * * * *
+    //  总共执行10次
+    // @times: 10
+    //  执行时间范围[unix_start, unix_end]
+    // @range: 1640966400 1643644800
+    //  任务类型 0永续任务 1时间范围执行任务 2指定了执行次数的任务
+    // @type: 1
+    rpc Refresh (RefreshReq) returns (RefreshResp);
+}
+
+
+message RefreshReq {}
+
+message RefreshResp {}
