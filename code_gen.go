@@ -13,7 +13,7 @@ import (
 	"github.com/emicklei/proto"
 	log "github.com/sirupsen/logrus"
 	format "github.com/actorbuf/proto-format"
-	"gitlab.heywoods.cn/go-sdk/proto-parser/rename"
+	"github.com/actorbuf/proto-parser/rename"
 )
 
 // listProtoFile 获取当前目录下的所有 proto 文件
