@@ -34,7 +34,7 @@ func injectValidatorTag(doc []string) []string {
 			rules := reg.FindAllStringSubmatch(d, -1)
 			if len(rules) > 0 && len(rules[0]) == 2 {
 				d = strings.Replace(d, "@v", "@gotags", -1)
-				d = strings.Replace(d, rules[0][1], fmt.Sprintf("validate:\"%s\"", rules[0][1]), -1)
+				d = strings.Replace(d, rules[0][1], fmt.Sprintf("binding:\"%s\"", rules[0][1]), -1)
 			}
 			res = append(res, d)
 			continue
